@@ -19,6 +19,6 @@ namespace Restaurants.Domain.Entities
         [StringLength(50)]
         public string? ContactNumber {  get; set; } = string.Empty;
         public Address? Address { get; set; }
-        public List<Dish> Dishes { get; set; } = new();
+        public List<Dish>? Dishes { get; set; } = new();
     }
 }

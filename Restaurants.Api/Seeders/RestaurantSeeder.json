@@ -1,0 +1,52 @@
+[
+  {
+    "name": "KFC",
+    "description": "KFC is an American fast food restaurant chain specializing in fried chicken.",
+    "category": "Fast Food",
+    "hasDelivery": true,
+    "contactEmail": "contact@kfc.com",
+    "contactNumber": "+44 20 1234 5678",
+    "address": {
+      "city": "London",
+      "street": "Cork St 5",
+      "postalCode": "WC2N 5DU"
+    },
+    "dishes": [
+      {
+        "name": "Nashville Hot Chicken",
+        "description": "Nashville Hot Chicken (10 pcs.)",
+        "price": 10.30
+      },
+      {
+        "name": "Chicken Nuggets",
+        "description": "Chicken Nuggets (5 pcs.)",
+        "price": 5.30
+      }
+    ]
+  },
+  {
+    "name": "McDonald's",
+    "description": "McDonald's operates and franchises fast food restaurants worldwide.",
+    "category": "Fast Food",
+    "hasDelivery": true,
+    "contactEmail": "contact@mcdonald.com",
+    "contactNumber": "+44 20 9876 5432",
+    "address": {
+      "city": "London",
+      "street": "Boots 193",
+      "postalCode": "W1F 8SR"
+    },
+    "dishes": [
+      {
+        "name": "Big Mac",
+        "description": "Classic Big Mac Burger",
+        "price": 6.50
+      },
+      {
+        "name": "McChicken",
+        "description": "Crispy chicken burger",
+        "price": 5.80
+      }
+    ]
+  }
+]
