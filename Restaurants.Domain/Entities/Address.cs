@@ -6,7 +6,7 @@ namespace Restaurants.Domain.Entities
     public class Address
     {
         [StringLength(100)]
-        public string? City { get; set; }
+        public string City { get; set; } = default!;
         [StringLength(100)]
         public string? Street { get; set; }
         [StringLength(50)]

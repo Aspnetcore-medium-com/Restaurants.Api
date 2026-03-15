@@ -26,8 +26,12 @@ namespace Restaurants.Infrastructure
 
             modelBuilder.Entity<Restaurant>()
                 .HasMany(r => r.Dishes)
-                .WithOne()
+                .WithOne(d => d.Restaurant)
                 .HasForeignKey(d => d.RestaurantId);
+
+            modelBuilder.Entity<Dish>()
+                .Property(d => d.Price)
+                .HasPrecision(18,2);
         }
 
 
