@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurants.Infrastructure
+namespace Restaurants.Infrastructure.Persistance
 {
     public class ApplicationDBContext : DbContext
     {

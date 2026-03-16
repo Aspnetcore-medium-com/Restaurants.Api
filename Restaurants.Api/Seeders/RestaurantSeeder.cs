@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Entities;
-using Restaurants.Infrastructure;
+using Restaurants.Infrastructure.Persistance;
 using System.Text.Json;
 using System.Threading.Tasks;
 
