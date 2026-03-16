@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurants.Infrastructure
+namespace Restaurants.Infrastructure.Extensions
 {
-    public static class InfraExtension
+    public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration)
         {

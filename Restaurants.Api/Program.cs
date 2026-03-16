@@ -1,6 +1,6 @@
 
 using Restaurants.Api.Seeders;
-using Restaurants.Infrastructure;
+using Restaurants.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
