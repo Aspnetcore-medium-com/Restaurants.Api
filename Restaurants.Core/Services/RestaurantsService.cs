@@ -24,16 +24,19 @@ namespace Restaurants.Core.Services
         }
         public async Task<IReadOnlyList<RestaurantResponseDto>> GetAllRestaurants(CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("{service}.{method} called", nameof(RestaurantsService), nameof(GetAllRestaurants));
+            _logger.LogInformation("{Service}.{Method} called", nameof(RestaurantsService), nameof(GetAllRestaurants));
             IReadOnlyList<Restaurant> restaurants = await _restaurantRepository.GetRestaurantsAsync(cancellationToken);
             _logger.LogInformation("Fetched {count} from restaurants", restaurants.Count);
             return _mapper.Map<IReadOnlyList<RestaurantResponseDto>>(restaurants);
         }
 
-        public async Task<RestaurantResponseDto?> GetRestaurantById(int id, CancellationToken cancellationToken = default)
+        public async Task<RestaurantResponseDto> GetRestaurantById(int restaurantId, CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("{service}.{method} called", nameof(RestaurantsService), nameof(GetRestaurantById));
-            Restaurant? restaurant = await _restaurantRepository.GetRestaurantByIdAsync(id, cancellationToken);
+            _logger.LogInformation("{Service}.{Method} called for {RestId}", nameof(RestaurantsService), nameof(GetRestaurantById), restaurantId);
+            Restaurant? restaurant = await _restaurantRepository.GetRestaurantByIdAsync(restaurantId, cancellationToken);
+            if (restaurant == null) { 
+                throw new KeyNotFoundException($"Restaurant id {restaurantId} not found");
+            }
             return _mapper.Map<RestaurantResponseDto>(restaurant);
         }
     }

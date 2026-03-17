@@ -4,3 +4,8 @@ GET {{Restaurants.Api_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+@restaurantId=1
+GET {{Restaurants.Api_HostAddress}}/api/restaurants/{id:int}?restaurantId={{restaurantId}}
+
+###

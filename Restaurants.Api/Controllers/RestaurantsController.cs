@@ -20,5 +20,12 @@ namespace Restaurants.Api.Controllers
            IReadOnlyList<RestaurantResponseDto> restaurants = await _restaurantsService.GetAllRestaurants(cancellationToken);
            return Ok(restaurants);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            RestaurantResponseDto restaurantResponseDto = await _restaurantsService.GetRestaurantById(id, cancellationToken);
+            return Ok(restaurantResponseDto);
+        }
     }
 }
