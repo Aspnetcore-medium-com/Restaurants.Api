@@ -12,6 +12,14 @@ namespace Restaurants.Core.MappingProfiles
     public class RestaurantProfile : Profile
     {
         public RestaurantProfile() {
+
+            CreateMap<RestaurantRequestDto, Restaurant>()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom( src => new Address{
+                     City = src.City,
+                     Street = src.Street,
+                     PostalCode = src.PostalCode
+                }));
+
             CreateMap<Restaurant, RestaurantResponseDto>()
                 .ForMember(d => d.City, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.City))
                 .ForMember(d => d.Street, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Street))

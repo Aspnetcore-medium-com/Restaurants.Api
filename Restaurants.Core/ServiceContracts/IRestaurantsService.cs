@@ -25,5 +25,12 @@ namespace Restaurants.Core.ServiceContracts
         /// <returns>A <see cref="RestaurantResponseDto"/> containing the restaurant's details if found; otherwise, <see
         /// langword="null"/>.</returns>
         Task<RestaurantResponseDto> GetRestaurantById(int restaurantId, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Creates a restaurant and returns the id
+        /// </summary>
+        /// <param name="restaurantRequestDto"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns> Returns a <see cref="int"/> Restaurant id</returns>
+        Task<int> CreateRestaurant(RestaurantRequestDto restaurantRequestDto, CancellationToken cancellationToken = default);
     }
 }

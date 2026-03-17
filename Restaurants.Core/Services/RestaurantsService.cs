@@ -7,6 +7,7 @@ using Restaurants.Domain.RepositoryContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,6 +39,15 @@ namespace Restaurants.Core.Services
                 throw new KeyNotFoundException($"Restaurant id {restaurantId} not found");
             }
             return _mapper.Map<RestaurantResponseDto>(restaurant);
+        }
+
+        public async Task<int> CreateRestaurant(RestaurantRequestDto restaurantRequestDto,CancellationToken cancellationToken = default)
+        {
+            _logger.LogInformation("create restaurant called");
+            var restaurant = _mapper.Map<Restaurant>(restaurantRequestDto);
+            var id = await _restaurantRepository.CreateRestaurantAsync(restaurant, cancellationToken);
+            _logger.LogInformation($"restaurant created with id {id}");
+            return id;
         }
     }
 }

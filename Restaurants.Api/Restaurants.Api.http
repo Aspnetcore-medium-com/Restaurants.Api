@@ -9,3 +9,20 @@ Accept: application/json
 GET {{Restaurants.Api_HostAddress}}/api/restaurants/{id:int}?restaurantId={{restaurantId}}
 
 ###
+
+POST {{Restaurants.Api_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+    "name": "CFC",
+    "description": "CFC is an American fast food restaurant chain specializing in fried chicken.",
+    "category": "Fast Food",
+    "hasDelivery": true,
+    "city": "London",
+    "street": "Cork St 5",
+    "postalCode": "WC2N 5DU",
+    "contactemail": "mail@email.com",
+    "contactNaumber": "900000"
+}
+
+###

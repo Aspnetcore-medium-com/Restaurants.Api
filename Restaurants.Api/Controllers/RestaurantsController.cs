@@ -27,5 +27,12 @@ namespace Restaurants.Api.Controllers
             RestaurantResponseDto restaurantResponseDto = await _restaurantsService.GetRestaurantById(id, cancellationToken);
             return Ok(restaurantResponseDto);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RestaurantRequestDto restaurantRequestDto, CancellationToken cancellationToken = default)
+        {
+            var id =  await _restaurantsService.CreateRestaurant(restaurantRequestDto, cancellationToken);
+            return CreatedAtAction(nameof(GetById), new { id }, null);
+        }
     }
 }

@@ -27,5 +27,12 @@ namespace Restaurants.Infrastructure.Repositories
             Restaurant? restaurant = await _dbContext.Restaurants.AsNoTracking().Include(r => r.Dishes).FirstOrDefaultAsync(r => r.Id == id, cancellation);
             return restaurant;
         }
+
+        public async Task<int> CreateRestaurantAsync(Restaurant restaurant, CancellationToken cancellationToken = default)
+        {
+            await _dbContext.Restaurants.AddAsync(restaurant, cancellationToken);
+            await _dbContext.SaveChangesAsync();
+            return restaurant.Id;
+        }
     }
 }
