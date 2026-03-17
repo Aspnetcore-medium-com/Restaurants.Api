@@ -29,5 +29,12 @@ namespace Restaurants.Core.Services
             _logger.LogInformation("Fetched {count} from restaurants", restaurants.Count);
             return _mapper.Map<IReadOnlyList<RestaurantResponseDto>>(restaurants);
         }
+
+        public async Task<RestaurantResponseDto?> GetRestaurantById(int id, CancellationToken cancellationToken = default)
+        {
+            _logger.LogInformation("{service}.{method} called", nameof(RestaurantsService), nameof(GetRestaurantById));
+            Restaurant? restaurant = await _restaurantRepository.GetRestaurantByIdAsync(id, cancellationToken);
+            return _mapper.Map<RestaurantResponseDto>(restaurant);
+        }
     }
 }

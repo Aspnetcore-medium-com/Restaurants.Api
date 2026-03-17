@@ -21,5 +21,11 @@ namespace Restaurants.Infrastructure.Repositories
             IReadOnlyList<Restaurant> restaurants =  await _dbContext.Restaurants.AsNoTracking().Include(r => r.Dishes).ToListAsync(cancellationToken);
             return restaurants;
         }
+
+        public async Task<Restaurant?> GetRestaurantByIdAsync(int id, CancellationToken cancellation = default)
+        {
+            Restaurant? restaurant = await _dbContext.Restaurants.AsNoTracking().Include(r => r.Dishes).FirstOrDefaultAsync(r => r.Id == id, cancellation);
+            return restaurant;
+        }
     }
 }

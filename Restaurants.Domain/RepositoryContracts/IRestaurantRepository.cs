@@ -18,5 +18,14 @@ namespace Restaurants.Domain.RepositoryContracts
         /// cref="Restaurant"/> objects representing the available restaurants. The list will be empty if no restaurants
         /// are found.</returns>
         Task<IReadOnlyList<Restaurant>> GetRestaurantsAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves a restaurant by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the restaurant to retrieve. Must be a positive integer.</param>
+        /// <param name="cancellation">A cancellation token that can be used to cancel the operation.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the restaurant with the
+        /// specified identifier, or null if no restaurant is found.</returns>
+        Task<Restaurant?> GetRestaurantByIdAsync(int id, CancellationToken cancellation = default);
     }
 }
