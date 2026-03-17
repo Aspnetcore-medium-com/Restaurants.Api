@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ServiceContracts\" />
-    <Folder Include="Services\" />
+    <PackageReference Include="AutoMapper" Version="15.1.2" />
   </ItemGroup>
 
 </Project>

@@ -16,9 +16,9 @@ namespace Restaurants.Infrastructure.Repositories
         public RestaurantRepository(ApplicationDBContext applicationDBContext) { 
             _dbContext = applicationDBContext;
         }
-        public async Task<IReadOnlyList<Restaurant>> GetRestaurants()
+        public async Task<IReadOnlyList<Restaurant>> GetRestaurantsAsync(CancellationToken cancellationToken = default)
         {
-            IReadOnlyList<Restaurant> restaurants =  await _dbContext.Restaurants.AsNoTracking().ToListAsync();
+            IReadOnlyList<Restaurant> restaurants =  await _dbContext.Restaurants.AsNoTracking().ToListAsync(cancellationToken);
             return restaurants;
         }
     }
