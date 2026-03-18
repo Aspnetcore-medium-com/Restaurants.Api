@@ -15,24 +15,25 @@ namespace Restaurants.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        public async Task<ActionResult<IReadOnlyList<RestaurantResponseDto>>> GetAll(CancellationToken cancellationToken = default)
         {
            IReadOnlyList<RestaurantResponseDto> restaurants = await _restaurantsService.GetAllRestaurants(cancellationToken);
            return Ok(restaurants);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<RestaurantResponseDto>> GetById(int id, CancellationToken cancellationToken = default)
         {
             RestaurantResponseDto restaurantResponseDto = await _restaurantsService.GetRestaurantById(id, cancellationToken);
             return Ok(restaurantResponseDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(RestaurantRequestDto restaurantRequestDto, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<RestaurantRequestDto>> Create(RestaurantRequestDto restaurantRequestDto, CancellationToken cancellationToken = default)
         {
             var id =  await _restaurantsService.CreateRestaurant(restaurantRequestDto, cancellationToken);
-            return CreatedAtAction(nameof(GetById), new { id }, null);
+            var createdRestaurant = await _restaurantsService.GetRestaurantById(id,cancellationToken); 
+            return CreatedAtAction(nameof(GetById), new { id }, createdRestaurant);
         }
     }
 }
