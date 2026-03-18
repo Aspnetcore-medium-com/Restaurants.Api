@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Core.MappingProfiles;
 using Restaurants.Core.ServiceContracts;
 using Restaurants.Core.Services;
+using Restaurants.Core.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,7 @@ namespace Restaurants.Core.Extension
             {
                 config.AddMaps(typeof(RestaurantProfile).Assembly);
             });
+            services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtension).Assembly);
             return services;
         }
     }

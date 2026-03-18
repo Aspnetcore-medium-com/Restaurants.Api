@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Restaurants.Api.Filters;
 using Restaurants.Core.Dtos.Restaurants;
 using Restaurants.Core.ServiceContracts;
 
@@ -29,6 +30,7 @@ namespace Restaurants.Api.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(ValidationFilter<RestaurantRequestDto>))]
         public async Task<ActionResult<RestaurantRequestDto>> Create(RestaurantRequestDto restaurantRequestDto, CancellationToken cancellationToken = default)
         {
             var id =  await _restaurantsService.CreateRestaurant(restaurantRequestDto, cancellationToken);
