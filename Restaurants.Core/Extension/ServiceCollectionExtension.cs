@@ -22,6 +22,7 @@ namespace Restaurants.Core.Extension
                 config.AddMaps(typeof(RestaurantProfile).Assembly);
             });
             services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtension).Assembly);
+            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ServiceCollectionExtension).Assembly));
             return services;
         }
     }

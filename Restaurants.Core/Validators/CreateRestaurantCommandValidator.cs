@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Restaurants.Core.Dtos.Restaurants;
+using Restaurants.Core.Dtos.Restaurants.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Validators
 {
-    public class CreateRestaurantDtoValidator : AbstractValidator<RestaurantRequestDto>
+    public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
     {
         private readonly List<string> types = ["Indian", "Chinese", "Italian", "English", "Turkish"];
-        public CreateRestaurantDtoValidator() {
+        public CreateRestaurantCommandValidator() {
             RuleFor(r => r.Name).NotEmpty().WithMessage("Name is required");
             RuleFor(r => r.ContactEmail).EmailAddress().WithMessage("Invalid Email");
             RuleFor(r => r.Category).Must(types.Contains).WithMessage("Invalid Category");

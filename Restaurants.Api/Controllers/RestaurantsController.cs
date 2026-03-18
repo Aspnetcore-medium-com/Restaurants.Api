@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Api.Filters;
 using Restaurants.Core.Dtos.Restaurants;
+using Restaurants.Core.Dtos.Restaurants.Commands;
 using Restaurants.Core.ServiceContracts;
 
 namespace Restaurants.Api.Controllers
@@ -11,8 +13,10 @@ namespace Restaurants.Api.Controllers
     public class RestaurantsController : ControllerBase
     {
         private readonly IRestaurantsService _restaurantsService;
-        public RestaurantsController(IRestaurantsService restaurantsService) { 
+        private readonly IMediator _mediator;
+        public RestaurantsController(IRestaurantsService restaurantsService,IMediator mediator) { 
             _restaurantsService = restaurantsService;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -30,10 +34,10 @@ namespace Restaurants.Api.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(ValidationFilter<RestaurantRequestDto>))]
-        public async Task<ActionResult<RestaurantRequestDto>> Create(RestaurantRequestDto restaurantRequestDto, CancellationToken cancellationToken = default)
+        [TypeFilter(typeof(ValidationFilter<CreateRestaurantCommand>))]
+        public async Task<ActionResult<RestaurantRequestDto>> Create(CreateRestaurantCommand createRestaurantCommand, CancellationToken cancellationToken = default)
         {
-            var id =  await _restaurantsService.CreateRestaurant(restaurantRequestDto, cancellationToken);
+            var id = await  _mediator.Send(createRestaurantCommand );
             var createdRestaurant = await _restaurantsService.GetRestaurantById(id,cancellationToken); 
             return CreatedAtAction(nameof(GetById), new { id }, createdRestaurant);
         }
