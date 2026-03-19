@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Dtos.Restaurants.Commands
 {
-    public class CreateRestaurantCommandHandler : IRequestHandler<CreateRestaurantCommand, int>
+    public class CreateRestaurantsCommandHandler : IRequestHandler<CreateRestaurantsCommand, int>
     {
         private readonly IMapper _mapper;
         private readonly IRestaurantRepository _restaurantRepository;
-        private readonly ILogger<CreateRestaurantCommandHandler> _logger;
-        public CreateRestaurantCommandHandler(IMapper mapper, IRestaurantRepository restaurantRepository, ILogger<CreateRestaurantCommandHandler> logger)  {
+        private readonly ILogger<CreateRestaurantsCommandHandler> _logger;
+        public CreateRestaurantsCommandHandler(IMapper mapper, IRestaurantRepository restaurantRepository, ILogger<CreateRestaurantsCommandHandler> logger)  {
             _mapper = mapper;
             _restaurantRepository = restaurantRepository;
             _logger = logger;
         }
-        public async Task<int> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateRestaurantsCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("create restaurant called");
             var restaurant = _mapper.Map<Restaurant>(request);

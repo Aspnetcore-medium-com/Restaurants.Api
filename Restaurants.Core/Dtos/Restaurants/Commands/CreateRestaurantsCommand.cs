@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Dtos.Restaurants.Commands
 {
-    public class CreateRestaurantCommand : IRequest<int>
+    public class CreateRestaurantsCommand : IRequest<int>
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;

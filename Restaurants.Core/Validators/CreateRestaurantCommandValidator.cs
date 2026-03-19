@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Validators
 {
-    public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
+    public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantsCommand>
     {
         private readonly List<string> types = ["Indian", "Chinese", "Italian", "English", "Turkish"];
         public CreateRestaurantCommandValidator() {
