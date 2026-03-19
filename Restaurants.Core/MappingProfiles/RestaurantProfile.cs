@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Restaurants.Core.Dtos.Restaurants;
-using Restaurants.Core.Dtos.Restaurants.Commands;
+using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create;
 using Restaurants.Domain.Entities;
 using System;
 using System.Collections.Generic;

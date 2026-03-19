@@ -34,5 +34,14 @@ namespace Restaurants.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return restaurant.Id;
         }
+
+        public async Task<bool> DeleteRestaurant(int id,CancellationToken cancellationToken = default)
+        {
+            var restaurant = await GetRestaurantByIdAsync(id, cancellationToken);
+            if ( restaurant == null) return false;
+            _dbContext.Restaurants.Remove(restaurant);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

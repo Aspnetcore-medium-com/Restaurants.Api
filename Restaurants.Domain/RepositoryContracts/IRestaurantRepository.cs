@@ -35,5 +35,12 @@ namespace Restaurants.Domain.RepositoryContracts
         /// <returns>A task that represents the asynchronous operation. The task result contains the unique identifier of the
         /// newly created restaurant.</returns>
         Task<int> CreateRestaurantAsync(Restaurant restaurant, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Deletes the given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>returns true or false</returns>
+        Task<bool> DeleteRestaurant(int id, CancellationToken cancellationToken = default);
     }
 }

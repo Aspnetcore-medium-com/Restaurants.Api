@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Api.Filters;
 using Restaurants.Core.Dtos.Restaurants;
-using Restaurants.Core.Dtos.Restaurants.Commands;
+using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create;
+using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Delete;
 using Restaurants.Core.Dtos.Restaurants.Queries;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetRestaurantsById;
@@ -43,6 +44,13 @@ namespace Restaurants.Api.Controllers
             var id = await  _mediator.Send(createRestaurantCommand );
             var createdRestaurant = await _restaurantsService.GetRestaurantById(id,cancellationToken); 
             return CreatedAtAction(nameof(GetById), new { id }, createdRestaurant);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
+        {
+            await _mediator.Send(new DeleteRestaurantRequest(id), cancellationToken);
+            return NoContent();
         }
     }
 }

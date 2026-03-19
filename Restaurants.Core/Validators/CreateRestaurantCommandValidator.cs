@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Restaurants.Core.Dtos.Restaurants;
-using Restaurants.Core.Dtos.Restaurants.Commands;
+using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;
