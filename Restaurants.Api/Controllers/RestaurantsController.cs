@@ -5,6 +5,7 @@ using Restaurants.Api.Filters;
 using Restaurants.Core.Dtos.Restaurants;
 using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create;
 using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Delete;
+using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Update;
 using Restaurants.Core.Dtos.Restaurants.Queries;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetRestaurantsById;
@@ -49,7 +50,17 @@ namespace Restaurants.Api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
         {
-            await _mediator.Send(new DeleteRestaurantRequest(id), cancellationToken);
+            var response = await _mediator.Send(new DeleteRestaurantRequest(id), cancellationToken);
+            if (!response) return NotFound("Restaurant not found");
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(int id,UpdateRestaurantCommand updateRestaurantCommand,CancellationToken cancellation)
+        {
+            updateRestaurantCommand.Id = id;
+            var response = await _mediator.Send(updateRestaurantCommand);
+            if (!response) return NotFound($"Restaurant {updateRestaurantCommand.Id} not found");
             return NoContent();
         }
     }

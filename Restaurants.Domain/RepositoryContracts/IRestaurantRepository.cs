@@ -42,5 +42,12 @@ namespace Restaurants.Domain.RepositoryContracts
         /// <param name="cancellationToken"></param>
         /// <returns>returns true or false</returns>
         Task<bool> DeleteRestaurant(int id, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// updates restaurant
+        /// </summary>
+        /// <param name="restaurant"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task UpdateRestaurantAsync(Restaurant restaurant, CancellationToken cancellationToken = default);
     }
 }

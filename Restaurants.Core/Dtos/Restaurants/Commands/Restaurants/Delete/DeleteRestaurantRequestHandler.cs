@@ -19,7 +19,6 @@ namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Delete
             if (restaurant == null)
             {
                 return false;
-                throw new KeyNotFoundException($"{request.Id} not found");
             }
             await restaurantRepository.DeleteRestaurant(restaurant.Id);
             return true;

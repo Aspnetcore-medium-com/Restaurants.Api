@@ -23,7 +23,7 @@ namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create
         }
         public async Task<int> Handle(CreateRestaurantsCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("create restaurant called");
+            _logger.LogInformation("create restaurant called {@request}",request);
             var restaurant = _mapper.Map<Restaurant>(request);
             var id = await _restaurantRepository.CreateRestaurantAsync(restaurant, cancellationToken);
             _logger.LogInformation($"restaurant created with id {id}");

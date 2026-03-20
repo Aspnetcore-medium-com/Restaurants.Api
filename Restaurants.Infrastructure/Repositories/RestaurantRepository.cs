@@ -24,7 +24,7 @@ namespace Restaurants.Infrastructure.Repositories
 
         public async Task<Restaurant?> GetRestaurantByIdAsync(int id, CancellationToken cancellation = default)
         {
-            Restaurant? restaurant = await _dbContext.Restaurants.AsNoTracking().Include(r => r.Dishes).FirstOrDefaultAsync(r => r.Id == id, cancellation);
+            Restaurant? restaurant = await _dbContext.Restaurants.Include(r => r.Dishes).FirstOrDefaultAsync(r => r.Id == id, cancellation);
             return restaurant;
         }
 
@@ -42,6 +42,11 @@ namespace Restaurants.Infrastructure.Repositories
             _dbContext.Restaurants.Remove(restaurant);
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task UpdateRestaurantAsync(Restaurant restaurant, CancellationToken cancellationToken = default)
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
