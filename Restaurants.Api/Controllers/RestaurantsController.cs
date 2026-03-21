@@ -25,6 +25,7 @@ namespace Restaurants.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<RestaurantResponseDto>>> GetAll(CancellationToken cancellationToken = default)
         {
             IReadOnlyList<RestaurantResponseDto> restaurants = await _mediator.Send(new GetAllRestaurantsQuery());
@@ -32,14 +33,21 @@ namespace Restaurants.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RestaurantResponseDto>> GetById(int id, CancellationToken cancellationToken = default)
         {
-            RestaurantResponseDto restaurantResponseDto = await _mediator.Send(new GetRestaurantByIdQuery(id) );
+            RestaurantResponseDto? restaurantResponseDto = await _mediator.Send(new GetRestaurantByIdQuery(id) );
+            if (restaurantResponseDto == null)
+            {
+                return NotFound();
+            } 
             return Ok(restaurantResponseDto);
         }
 
         [HttpPost]
         [TypeFilter(typeof(ValidationFilter<CreateRestaurantsCommand>))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<RestaurantRequestDto>> Create(CreateRestaurantsCommand createRestaurantCommand, CancellationToken cancellationToken = default)
         {
             var id = await  _mediator.Send(createRestaurantCommand );
@@ -48,6 +56,8 @@ namespace Restaurants.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(new DeleteRestaurantRequest(id), cancellationToken);
@@ -56,6 +66,8 @@ namespace Restaurants.Api.Controllers
         }
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Update(int id,UpdateRestaurantCommand updateRestaurantCommand,CancellationToken cancellation)
         {
             updateRestaurantCommand.Id = id;

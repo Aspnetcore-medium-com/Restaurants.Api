@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Dtos.Restaurants.Queries.GetRestaurantsById
 {
-    public class GetRestaurantByIdQuery(int id) : IRequest<RestaurantResponseDto>
+    public class GetRestaurantByIdQuery(int id) : IRequest<RestaurantResponseDto?>
     {
         public int Id { get; set; } = id;
     }

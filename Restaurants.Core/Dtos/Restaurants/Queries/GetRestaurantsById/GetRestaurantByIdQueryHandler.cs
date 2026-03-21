@@ -24,13 +24,13 @@ namespace Restaurants.Core.Dtos.Restaurants.Queries.GetRestaurantsById
             _restaurantRepository = restaurantRepository;
             _logger = logger;
         }
-        public async Task<RestaurantResponseDto> Handle(GetRestaurantByIdQuery request, CancellationToken cancellationToken)
+        public async Task<RestaurantResponseDto?> Handle(GetRestaurantByIdQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("{Service}.{Method} called for {RestId}", nameof(RestaurantsService), "GetRestaurantById", request.Id);
             Restaurant? restaurant = await _restaurantRepository.GetRestaurantByIdAsync(request.Id, cancellationToken);
             if (restaurant == null)
             {
-                throw new KeyNotFoundException($"Restaurant id {request.Id} not found");
+                return null;
             }
             return _mapper.Map<RestaurantResponseDto>(restaurant);
         }

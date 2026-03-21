@@ -3,6 +3,7 @@ using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistance;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Restaurants.Api.Seeders
 {
@@ -13,6 +14,11 @@ namespace Restaurants.Api.Seeders
 
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+            var dbName = context.Database.GetDbConnection().Database;
+            if (string.IsNullOrWhiteSpace(dbName) || dbName == "master")
+            {
+                throw new Exception($"Invalid database detected: {dbName}");
+            }
             await context.Database.MigrateAsync();
 
             if (!await context.Restaurants.AnyAsync())

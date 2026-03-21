@@ -1,5 +1,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
+using Restaurants.Api.Middlewares;
 using Restaurants.Api.Seeders;
 using Restaurants.Core.Extension;
 using Restaurants.Infrastructure.Extensions;
@@ -26,10 +27,19 @@ builder.Host.UseSerilog((context,services,configuration) =>
         
 });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
+app.UseErrorHandlingMiddleware();
 await app.Seed();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 // Configure the HTTP request pipeline.
 
 app.UseAuthorization();
