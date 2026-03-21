@@ -22,9 +22,8 @@ builder.Host.UseSerilog((context,services,configuration) =>
 {
     configuration
         .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services)
-        .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-        .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information);
+        .ReadFrom.Services(services);
+        
 });
 
 var app = builder.Build();
