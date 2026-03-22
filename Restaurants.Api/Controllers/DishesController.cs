@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Api.Filters;
 using Restaurants.Core.Dishes.Commands.Create;
+using Restaurants.Core.Dishes.Commands.Delete;
 using Restaurants.Core.Dishes.Dtos;
 using Restaurants.Core.Dishes.Queries.GetDishesOfRestaurant;
 using Restaurants.Core.Dishes.Queries.GetDishOfRestaurant;
 using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create;
+using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Delete;
 
 namespace Restaurants.Api.Controllers
 {
@@ -41,6 +43,14 @@ namespace Restaurants.Api.Controllers
         public async Task<ActionResult<DishResponseDto>> GetDishOfRestaurant(int restaurantId,int dishId, CancellationToken cancellationToken = default)
         {
             return Ok(await mediator.Send(new GetDishOfRestaurantQuery(restaurantId,dishId),cancellationToken));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int restaurantId,DeleteDishesCommand deleteDishesCommand, CancellationToken cancellationToken = default)
+        {
+            deleteDishesCommand.RestaurantId = restaurantId;
+            await mediator.Send(deleteDishesCommand);
+            return NoContent();
         }
        
     }
