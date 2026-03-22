@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Domain.RepositoryContracts
 {
-    public interface IRestaurantRepository
+    public interface IRestaurantsRepository
     {
         /// <summary>
         /// Retrieves a read-only list of all available restaurants.

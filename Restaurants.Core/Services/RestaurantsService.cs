@@ -16,9 +16,9 @@ namespace Restaurants.Core.Services
     public class RestaurantsService : IRestaurantsService
     {
         private readonly ILogger<RestaurantsService> _logger;
-        private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IRestaurantsRepository _restaurantRepository;
         private readonly IMapper _mapper;
-        public RestaurantsService(IRestaurantRepository restaurantRepository, ILogger<RestaurantsService> logger, IMapper mapper) {
+        public RestaurantsService(IRestaurantsRepository restaurantRepository, ILogger<RestaurantsService> logger, IMapper mapper) {
             _restaurantRepository = restaurantRepository;
             _logger = logger;
             _mapper = mapper;

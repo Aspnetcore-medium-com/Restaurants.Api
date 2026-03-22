@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Update
 {
-    public class UpdateRestaurantCommandHandler(IMapper mapper, IRestaurantRepository restaurantRepository, ILogger<UpdateRestaurantCommandHandler> logger) : IRequestHandler<UpdateRestaurantCommand, bool>
+    public class UpdateRestaurantCommandHandler(IMapper mapper, IRestaurantsRepository restaurantRepository, ILogger<UpdateRestaurantCommandHandler> logger) : IRequestHandler<UpdateRestaurantCommand, bool>
     {
         public async Task<bool> Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
         {

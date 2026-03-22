@@ -15,10 +15,10 @@ namespace Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants
     public class GetAllRestaurantsQueryHandler : IRequestHandler<GetAllRestaurantsQuery, IReadOnlyList<RestaurantResponseDto>>
     {
         private readonly ILogger<GetAllRestaurantsQueryHandler> _logger;
-        private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IRestaurantsRepository _restaurantRepository;
         private readonly IMapper _mapper;
         
-        public GetAllRestaurantsQueryHandler(ILogger<GetAllRestaurantsQueryHandler> logger, IRestaurantRepository restaurantRepository, IMapper mapper) {
+        public GetAllRestaurantsQueryHandler(ILogger<GetAllRestaurantsQueryHandler> logger, IRestaurantsRepository restaurantRepository, IMapper mapper) {
             _logger = logger;
             _restaurantRepository = restaurantRepository;
             _mapper = mapper;

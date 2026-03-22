@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Infrastructure.Repositories
 {
-    public class RestaurantRepository : IRestaurantRepository
+    public class RestaurantsRepository : IRestaurantsRepository
     {
         private readonly ApplicationDBContext _dbContext;
-        public RestaurantRepository(ApplicationDBContext applicationDBContext) { 
+        public RestaurantsRepository(ApplicationDBContext applicationDBContext) { 
             _dbContext = applicationDBContext;
         }
         public async Task<IReadOnlyList<Restaurant>> GetRestaurantsAsync(CancellationToken cancellationToken = default)

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Delete
 {
-    public class DeleteRestaurantRequestHandler(IMapper mapper, IRestaurantRepository restaurantRepository, ILogger<DeleteRestaurantRequestHandler> logger) : IRequestHandler<DeleteRestaurantRequest, bool>
+    public class DeleteRestaurantRequestHandler(IMapper mapper, IRestaurantsRepository restaurantRepository, ILogger<DeleteRestaurantRequestHandler> logger) : IRequestHandler<DeleteRestaurantRequest, bool>
     {
         public async Task<bool> Handle(DeleteRestaurantRequest request, CancellationToken cancellationToken)
         {

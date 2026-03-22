@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Restaurants.Exceptions;
 using System.Threading.Tasks;
 
 namespace Restaurants.Api.Middlewares
@@ -21,6 +22,18 @@ namespace Restaurants.Api.Middlewares
             try
             {
                 await _next(httpContext);
+            }
+            catch (RestaurantNotFoundException ex)
+            {
+                _logger.LogError("restaurant not found {Id}",ex);
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+                httpContext.Response.ContentType = "application/json";
+                var problem = new
+                {
+                    title = "Restaurant not found",
+                    description = ex.Message
+                };
+                await httpContext.Response.WriteAsJsonAsync(problem);
             }
             catch (Exception ex)
             {

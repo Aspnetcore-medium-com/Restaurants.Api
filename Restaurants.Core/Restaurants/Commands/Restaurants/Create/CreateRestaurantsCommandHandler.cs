@@ -14,9 +14,9 @@ namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create
     public class CreateRestaurantsCommandHandler : IRequestHandler<CreateRestaurantsCommand, int>
     {
         private readonly IMapper _mapper;
-        private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IRestaurantsRepository _restaurantRepository;
         private readonly ILogger<CreateRestaurantsCommandHandler> _logger;
-        public CreateRestaurantsCommandHandler(IMapper mapper, IRestaurantRepository restaurantRepository, ILogger<CreateRestaurantsCommandHandler> logger)  {
+        public CreateRestaurantsCommandHandler(IMapper mapper, IRestaurantsRepository restaurantRepository, ILogger<CreateRestaurantsCommandHandler> logger)  {
             _mapper = mapper;
             _restaurantRepository = restaurantRepository;
             _logger = logger;

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Restaurants.Domain\Restaurants.Domain.csproj" />
+    <ProjectReference Include="..\Restaurants.Exception\Restaurants.Exceptions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
