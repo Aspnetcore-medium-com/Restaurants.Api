@@ -11,7 +11,7 @@ namespace Restaurants.Core.Dishes.Validators
     public class CreateDishCommandValidator: AbstractValidator<CreateDishCommand>
     {
         public CreateDishCommandValidator() {
-            RuleFor(d => d.KiloCalories).LessThanOrEqualTo(1).WithMessage("Kilo calories must be greater than 0");
+            RuleFor(d => d.KiloCalories).LessThanOrEqualTo(0).WithMessage("Kilo calories must be greater than 0");
             RuleFor(d => d.Price).LessThanOrEqualTo(0).WithMessage("Price must be greater than 0");
         }
     }

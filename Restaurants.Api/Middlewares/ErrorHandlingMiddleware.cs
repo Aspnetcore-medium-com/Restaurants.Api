@@ -25,7 +25,7 @@ namespace Restaurants.Api.Middlewares
             }
             catch (RestaurantNotFoundException ex)
             {
-                _logger.LogError("restaurant not found {Id}",ex);
+                _logger.LogError(ex, "Restaurant not found.");
                 httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
                 httpContext.Response.ContentType = "application/json";
                 var problem = new
