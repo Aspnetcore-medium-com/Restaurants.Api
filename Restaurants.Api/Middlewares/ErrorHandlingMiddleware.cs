@@ -23,7 +23,7 @@ namespace Restaurants.Api.Middlewares
             {
                 await _next(httpContext);
             }
-            catch (RestaurantNotFoundException ex)
+            catch (NotFoundException ex)
             {
                 _logger.LogError(ex, "Restaurant not found.");
                 httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
