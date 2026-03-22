@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurants.Core.Dtos.Dishes
+namespace Restaurants.Core.Dishes.Dtos
 {
     public class DishResponseDto
     {
@@ -14,7 +14,6 @@ namespace Restaurants.Core.Dtos.Dishes
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
         public decimal Price { get; set; }
-        public int RestaurantId { get; set; }
         public int? KiloCalories { get; set; }
     }
 }
