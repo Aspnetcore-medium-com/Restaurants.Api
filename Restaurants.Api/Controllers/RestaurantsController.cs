@@ -28,7 +28,7 @@ namespace Restaurants.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<RestaurantResponseDto>>> GetAll(CancellationToken cancellationToken = default)
         {
-            IReadOnlyList<RestaurantResponseDto> restaurants = await _mediator.Send(new GetAllRestaurantsQuery());
+            IReadOnlyList<RestaurantResponseDto> restaurants = await _mediator.Send(new GetAllRestaurantsQuery(),cancellationToken);
             return Ok(restaurants);
         }
 
@@ -37,7 +37,7 @@ namespace Restaurants.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RestaurantResponseDto>> GetById(int id, CancellationToken cancellationToken = default)
         {
-            RestaurantResponseDto? restaurantResponseDto = await _mediator.Send(new GetRestaurantByIdQuery(id) );
+            RestaurantResponseDto? restaurantResponseDto = await _mediator.Send(new GetRestaurantByIdQuery(id),cancellationToken );
             if (restaurantResponseDto == null)
             {
                 return NotFound();
@@ -73,10 +73,10 @@ namespace Restaurants.Api.Controllers
         [HttpPatch("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Update(int id,UpdateRestaurantCommand updateRestaurantCommand,CancellationToken cancellation)
+        public async Task<IActionResult> Update(int id,UpdateRestaurantCommand updateRestaurantCommand,CancellationToken cancellationToken)
         {
             updateRestaurantCommand.Id = id;
-            var response = await _mediator.Send(updateRestaurantCommand);
+            var response = await _mediator.Send(updateRestaurantCommand, cancellationToken);
             if (!response) return NotFound($"Restaurant {updateRestaurantCommand.Id} not found");
             return NoContent();
         }
