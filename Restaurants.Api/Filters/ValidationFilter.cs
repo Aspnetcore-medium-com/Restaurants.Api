@@ -20,6 +20,7 @@ namespace Restaurants.Api.Filters
             if (model == null)
             {
                 await next();
+                return;
             }
             ValidationResult validationResult = await _validator.ValidateAsync(model);
             if (!validationResult.IsValid)

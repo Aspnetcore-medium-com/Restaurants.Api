@@ -48,10 +48,15 @@ namespace Restaurants.Api.Controllers
         [HttpPost]
         [TypeFilter(typeof(ValidationFilter<CreateRestaurantsCommand>))]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<RestaurantRequestDto>> Create(CreateRestaurantsCommand createRestaurantCommand, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<RestaurantResponseDto>> Create(CreateRestaurantsCommand createRestaurantCommand, CancellationToken cancellationToken = default)
         {
-            var id = await  _mediator.Send(createRestaurantCommand );
-            var createdRestaurant = await _restaurantsService.GetRestaurantById(id,cancellationToken); 
+            var id = await _mediator.Send(createRestaurantCommand, cancellationToken);
+            var createdRestaurant = await _mediator.Send(new GetRestaurantByIdQuery(id), cancellationToken);
+            if (createdRestaurant == null)
+            {
+                return NotFound();
+            }
+
             return CreatedAtAction(nameof(GetById), new { id }, createdRestaurant);
         }
 
