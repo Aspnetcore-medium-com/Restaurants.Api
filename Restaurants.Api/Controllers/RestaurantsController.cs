@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Api.Filters;
@@ -13,6 +14,7 @@ using Restaurants.Core.ServiceContracts;
 
 namespace Restaurants.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RestaurantsController : ControllerBase

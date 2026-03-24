@@ -1,35 +1,18 @@
-
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi;
+using Restaurants.Api.Extensions;
 using Restaurants.Api.Middlewares;
 using Restaurants.Api.Seeders;
 using Restaurants.Core.Extension;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Extensions;
 using Serilog;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-
+builder.AddPresentation();
 builder.Services.AddInfra(builder.Configuration).AddCore();
-builder.Services.AddHttpLogging( options =>
-{
-
-});
-
-builder.Host.UseSerilog((context,services,configuration) =>
-{
-    configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services);
-        
-});
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -42,7 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 // Configure the HTTP request pipeline.
-app.MapIdentityApi<ApplicationUser>();
+app.MapGroup("api/identity").MapIdentityApi<ApplicationUser>();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpLogging();
 app.UseSerilogRequestLogging();
