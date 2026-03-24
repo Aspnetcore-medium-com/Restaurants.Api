@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Api.Middlewares;
 using Restaurants.Api.Seeders;
 using Restaurants.Core.Extension;
+using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Extensions;
 using Serilog;
 using Serilog.Events;
@@ -41,7 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 // Configure the HTTP request pipeline.
-
+app.MapIdentityApi<ApplicationUser>();
 app.UseAuthorization();
 app.UseHttpLogging();
 app.UseSerilogRequestLogging();

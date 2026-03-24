@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Infrastructure.Persistance
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<ApplicationUser,IdentityRole<Guid>,Guid>
     {
         
         public virtual DbSet<Restaurant> Restaurants { get; set; }
         public virtual DbSet<Dish> Dishes { get; set; }
 
-        public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> dbContextOptions) : base(dbContextOptions)
         {
 
         }
