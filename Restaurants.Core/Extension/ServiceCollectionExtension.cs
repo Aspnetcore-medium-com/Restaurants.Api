@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Core.MappingProfiles;
 using Restaurants.Core.ServiceContracts;
 using Restaurants.Core.Services;
+using Restaurants.Core.User;
 using Restaurants.Core.Validators;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Restaurants.Core.Extension
             });
             services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtension).Assembly);
             services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ServiceCollectionExtension).Assembly));
+            services.AddScoped<IUserContext, UserContext>();
+            services.AddHttpContextAccessor();
             return services;
         }
     }

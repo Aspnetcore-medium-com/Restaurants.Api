@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistance;
 using System.Text.Json;
@@ -32,5 +33,7 @@ namespace Restaurants.Api.Seeders
                 await context.SaveChangesAsync();
             }
         }
+
+        private IEnumerable<Roles>
     }
 }
