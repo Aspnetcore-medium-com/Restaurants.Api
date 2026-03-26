@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization.Infrastructure;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistance;
 using System.Text.Json;
@@ -32,8 +34,37 @@ namespace Restaurants.Api.Seeders
                 await context.Restaurants.AddRangeAsync(restaurants);
                 await context.SaveChangesAsync();
             }
+
+            if (!await context.Roles.AnyAsync())
+            {
+                var roles = GetRoles();
+                await context.Roles.AddRangeAsync(roles);
+                await context.SaveChangesAsync();
+            }
         }
 
-        private IEnumerable<Roles>
+        private static IEnumerable<ApplicationRole> GetRoles()
+        {
+            List<ApplicationRole> roles =
+            [
+                new ApplicationRole
+                {
+                    Name = UserRoles.Owner,
+                    NormalizedName = UserRoles.Owner.ToUpper()
+                },
+                new ApplicationRole
+                {
+                    Name = UserRoles.Admin,
+                    NormalizedName = UserRoles.Admin.ToUpper()
+                },
+                new ApplicationRole
+                {
+                    Name = UserRoles.User,
+                    NormalizedName = UserRoles.User.ToUpper()
+                }
+            ];
+
+            return roles;
+        }
     }
 }

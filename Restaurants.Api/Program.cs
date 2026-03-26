@@ -25,11 +25,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 // Configure the HTTP request pipeline.
-app.MapGroup("api/identity").MapIdentityApi<ApplicationUser>();
+app.MapGroup("api/identity").MapIdentityApi<ApplicationUser>().AllowAnonymous();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpLogging();
 app.UseSerilogRequestLogging();
-app.MapControllers();
+app.MapControllers().RequireAuthorization(); 
 
 app.Run();

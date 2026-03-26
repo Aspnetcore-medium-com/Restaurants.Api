@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Infrastructure.Persistance
 {
-    public class ApplicationDBContext : IdentityDbContext<ApplicationUser,IdentityRole<Guid>,Guid>
+    public class ApplicationDBContext : IdentityDbContext<ApplicationUser,ApplicationRole,Guid>
     {
         
         public virtual DbSet<Restaurant> Restaurants { get; set; }

@@ -11,6 +11,7 @@ using Restaurants.Core.Dtos.Restaurants.Queries;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetRestaurantsById;
 using Restaurants.Core.ServiceContracts;
+using Restaurants.Domain.Constants;
 
 namespace Restaurants.Api.Controllers
 {
@@ -50,6 +51,7 @@ namespace Restaurants.Api.Controllers
         [HttpPost]
         [TypeFilter(typeof(ValidationFilter<CreateRestaurantsCommand>))]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize(Roles = UserRoles.Owner)]
         public async Task<ActionResult<RestaurantResponseDto>> Create(CreateRestaurantsCommand createRestaurantCommand, CancellationToken cancellationToken = default)
         {
             var id = await _mediator.Send(createRestaurantCommand, cancellationToken);
