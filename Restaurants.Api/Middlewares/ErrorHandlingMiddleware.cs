@@ -25,12 +25,12 @@ namespace Restaurants.Api.Middlewares
             }
             catch (NotFoundException ex)
             {
-                _logger.LogError(ex, "Restaurant not found.");
+                _logger.LogWarning(ex, "{Resource} not found with key {Key}", ex.ResourceName, ex.ResourceKey);
                 httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
                 httpContext.Response.ContentType = "application/json";
                 var problem = new
                 {
-                    title = "Restaurant not found",
+                    title = $"{ex.ResourceName} not found",
                     description = ex.Message
                 };
                 await httpContext.Response.WriteAsJsonAsync(problem);

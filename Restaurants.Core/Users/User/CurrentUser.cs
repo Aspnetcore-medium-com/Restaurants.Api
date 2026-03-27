@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurants.Core.User
+namespace Restaurants.Core.Users.User
 {
     public record CurrentUser(string Id, string Email, IEnumerable<string> Roles)
     {

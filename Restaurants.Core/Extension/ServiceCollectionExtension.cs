@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Core.MappingProfiles;
 using Restaurants.Core.ServiceContracts;
 using Restaurants.Core.Services;
-using Restaurants.Core.User;
+using Restaurants.Core.Users.User;
 using Restaurants.Core.Validators;
 using System;
 using System.Collections.Generic;

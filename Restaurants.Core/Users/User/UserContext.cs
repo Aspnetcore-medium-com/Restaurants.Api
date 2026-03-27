@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurants.Core.User
+namespace Restaurants.Core.Users.User
 {
     public interface IUserContext
     {

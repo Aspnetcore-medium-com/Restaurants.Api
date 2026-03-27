@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurants.Core.Users.Command
+namespace Restaurants.Core.Users.Command.Update
 {
     public class UpdateUserCommand : IRequest
     {

@@ -18,7 +18,7 @@ namespace Restaurants.Core.Dishes.Commands.Create
             if (restaurant == null)
             {
                 logger.LogError("Restaurant id {Id} not found", request.RestaurantId);
-                throw new NotFoundException($"Restaurant id {request.RestaurantId} not found");
+                throw new NotFoundException("Restaurant", request.RestaurantId);
             }
             var dish = mapper.Map<Dish>(request);
             await dishesRepositroy.CreateDishAsync(dish);

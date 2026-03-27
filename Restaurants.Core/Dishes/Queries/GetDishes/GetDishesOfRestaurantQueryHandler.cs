@@ -25,7 +25,7 @@ namespace Restaurants.Core.Dishes.Queries.GetDishes
             Restaurant? restaurant = await restaurantsRepository.GetRestaurantByIdAsync(restaurantId,cancellationToken);
             if (restaurant == null) {
                 logger.LogError("restaurant not found {RestaurantId}",restaurantId);
-                throw new NotFoundException($"restaurant not found {restaurantId}"); 
+                throw new NotFoundException($"restaurant not found",restaurantId); 
             }
             return mapper.Map<List<DishResponseDto>>(restaurant.Dishes);
         }

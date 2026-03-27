@@ -25,13 +25,14 @@ namespace Restaurants.Core.Dishes.Queries.GetDishOfRestaurant
             if (restaurant == null)
             {
                 logger.LogError("restaurant not found {RestaurantId}", request.RestaurantId);
-                throw new NotFoundException($"restaurant not found {request.RestaurantId}");
+                throw new NotFoundException("restaurant not found ",request.RestaurantId);
             }
             var dish = restaurant.Dishes?.FirstOrDefault(d => d.Id == request.DishId);
             if (dish == null)
             {
                 logger.LogError("dish {Dishid} not found in restaurant {RestaurantId} ", request.DishId, request.RestaurantId);
-                throw new NotFoundException($"Dish not found {request.DishId}");
+                throw new NotFoundException("Dish not found ", request.DishId);
+
             }
             return mapper.Map<DishResponseDto>(dish);
 

@@ -18,12 +18,13 @@ namespace Restaurants.Core.Dishes.Commands.Delete
             if (restaurant == null)
             {
                 logger.LogError("Restaurant id {Id} not found", request.RestaurantId);
-                throw new NotFoundException($"Restaurant id {request.RestaurantId} not found");
+                throw new NotFoundException("Restaurant id not found",request.RestaurantId );
             }
             if (!await dishesRepository.HasDishesAsync(request.RestaurantId))
             {
                 logger.LogError("Restaurant id {Id} dishes not found", request.RestaurantId);
-                throw new NotFoundException($"Restaurant id {request.RestaurantId} dishes not found");
+                throw new NotFoundException("dishes not found in restaurant", request.RestaurantId);
+
             }
             await dishesRepository.DeleteDishesAsync(restaurant.Dishes!);
         }
