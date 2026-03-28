@@ -27,7 +27,7 @@ namespace Restaurants.Core.Users.Command.Update
                 throw new NotFoundException("user not found in store", user);
             }
             appUser.Nationality = request.Nationality;
-            appUser.DateOfBirth = request.DateOnly;
+            appUser.DateOfBirth = request.DateOfBirth;
             userStore.UpdateAsync(appUser, cancellationToken);
         }
     }
