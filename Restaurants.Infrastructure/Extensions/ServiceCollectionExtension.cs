@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.RepositoryContracts;
+using Restaurants.Infrastructure.Authorization;
+using Restaurants.Infrastructure.Authorization.AgeRequirement;
 using Restaurants.Infrastructure.Persistance;
 using Restaurants.Infrastructure.Repositories;
 using System;
@@ -21,9 +25,16 @@ namespace Restaurants.Infrastructure.Extensions
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(configuration.GetConnectionString("RestaurantsDB")).EnableSensitiveDataLogging());
             services.AddScoped<IRestaurantsRepository,RestaurantsRepository>();
             services.AddScoped<IDishesRepositroy,DishesRepository>();
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>,
+                            RestaurantsUserClaimsPrincipalFactory>();
             services.AddIdentityApiEndpoints<ApplicationUser>()
                         .AddRoles<ApplicationRole>()
+                        .AddClaimsPrincipalFactory<RestaurantsUserClaimsPrincipalFactory>()
                         .AddEntityFrameworkStores<ApplicationDBContext>();
+            services.AddScoped<IAuthorizationHandler,MinimumAgeRequirementHandler>();
+            services.AddAuthorizationBuilder()
+                    .AddPolicy(PolicyNames.HasNationality, builder => builder.RequireClaim(AppClaimTypes.Nationality,"British","Indian"))
+                    .AddPolicy(PolicyNames.AgePolicy, builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
             return services;
         }
     }

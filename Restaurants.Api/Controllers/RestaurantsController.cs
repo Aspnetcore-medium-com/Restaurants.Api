@@ -12,6 +12,7 @@ using Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetRestaurantsById;
 using Restaurants.Core.ServiceContracts;
 using Restaurants.Domain.Constants;
+using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.Api.Controllers
 {
@@ -38,6 +39,7 @@ namespace Restaurants.Api.Controllers
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = PolicyNames.HasNationality )]
         public async Task<ActionResult<RestaurantResponseDto>> GetById(int id, CancellationToken cancellationToken = default)
         {
             RestaurantResponseDto? restaurantResponseDto = await _mediator.Send(new GetRestaurantByIdQuery(id),cancellationToken );
@@ -67,6 +69,7 @@ namespace Restaurants.Api.Controllers
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Authorize(Policy = PolicyNames.AgePolicy)]
         public async Task<IActionResult> Delete(int id,CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(new DeleteRestaurantRequest(id), cancellationToken);
