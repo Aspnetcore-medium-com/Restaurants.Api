@@ -25,10 +25,13 @@ namespace Restaurants.Infrastructure.Authorization.AgeRequirement
             if (currentUser?.DateofBirth.Value.AddYears(requirement.MinimumAge) <= DateOnly.FromDateTime(DateTime.Today)) {
                 logger.LogInformation("Authorization succeeded");
                 context.Succeed(requirement);
-            }
-            
+            } else
+            {
+                context.Fail();
 
-            context.Fail();
+            }
+
+
             return Task.CompletedTask;
         }
     }
