@@ -5,6 +5,7 @@ using Restaurants.Core.ServiceContracts;
 using Restaurants.Core.Services;
 using Restaurants.Core.Users.User;
 using Restaurants.Core.Validators;
+using Restaurants.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace Restaurants.Core.Extension
             services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ServiceCollectionExtension).Assembly));
             services.AddScoped<IUserContext, UserContext>();
             services.AddHttpContextAccessor();
+
             return services;
         }
     }

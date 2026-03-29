@@ -35,6 +35,18 @@ namespace Restaurants.Api.Middlewares
                 };
                 await httpContext.Response.WriteAsJsonAsync(problem);
             }
+            catch (ForbiddenException ex)
+            {
+                _logger.LogWarning(ex, "Forbidden exception raised");
+                httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+                httpContext.Response.ContentType = "application/json";
+                var problem = new
+                {
+                    title = $"Forbidden",
+                    description = ex.Message
+                };
+                await httpContext.Response.WriteAsJsonAsync(problem);
+            }
             catch (Exception ex)
             {
                 var errorId = Guid.NewGuid().ToString("N");

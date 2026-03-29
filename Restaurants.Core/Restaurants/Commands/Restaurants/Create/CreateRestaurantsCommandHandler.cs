@@ -3,8 +3,10 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Restaurants.Core.Users.User;
 using Restaurants.Domain.Entities;
+using Restaurants.Domain.Interfaces;
 using Restaurants.Domain.RepositoryContracts;
 using Restaurants.Exceptions;
+using Restaurants.Infrastructure.Authorization.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +21,15 @@ namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create
         private readonly IRestaurantsRepository _restaurantRepository;
         private readonly ILogger<CreateRestaurantsCommandHandler> _logger;
         private readonly IUserContext _userContext;
+        private readonly IRestaurantAuthorizationService _restaurantAuthorizationService;
         public CreateRestaurantsCommandHandler(IMapper mapper, IRestaurantsRepository restaurantRepository, 
-            ILogger<CreateRestaurantsCommandHandler> logger, IUserContext userContext)  {
+            ILogger<CreateRestaurantsCommandHandler> logger, IUserContext userContext,
+            IRestaurantAuthorizationService restaurantAuthorizationService)  {
             _mapper = mapper;
             _restaurantRepository = restaurantRepository;
             _logger = logger;
             _userContext = userContext;
+            _restaurantAuthorizationService = restaurantAuthorizationService;
         }
         public async Task<int> Handle(CreateRestaurantsCommand request, CancellationToken cancellationToken)
         {
@@ -33,6 +38,10 @@ namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create
             var restaurant = _mapper.Map<Restaurant>(request);
             if ( user == null) { throw new NotFoundException($"user not found ",nameof(user)); }
             restaurant.OwnerId = Guid.Parse(user.Id);
+            if ( ! _restaurantAuthorizationService.Authorize(restaurant,ResourceOperation.Create)) {
+                _logger.LogInformation("Create operation denied for {User}", user.Email);
+                throw new ForbiddenException();
+            }
             var id = await _restaurantRepository.CreateRestaurantAsync(restaurant, cancellationToken);
             _logger.LogInformation("restaurant created with id {Id}",id);
             return id;

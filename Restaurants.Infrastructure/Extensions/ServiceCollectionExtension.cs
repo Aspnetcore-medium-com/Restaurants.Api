@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Domain.Entities;
+using Restaurants.Domain.Interfaces;
 using Restaurants.Domain.RepositoryContracts;
 using Restaurants.Infrastructure.Authorization;
 using Restaurants.Infrastructure.Authorization.AgeRequirement;
+using Restaurants.Infrastructure.Authorization.Services;
 using Restaurants.Infrastructure.Persistance;
 using Restaurants.Infrastructure.Repositories;
 using System;
@@ -35,6 +37,8 @@ namespace Restaurants.Infrastructure.Extensions
             services.AddAuthorizationBuilder()
                     .AddPolicy(PolicyNames.HasNationality, builder => builder.RequireClaim(AppClaimTypes.Nationality,"British","Indian"))
                     .AddPolicy(PolicyNames.AgePolicy, builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
+            services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
+
             return services;
         }
     }
