@@ -26,8 +26,9 @@ namespace Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants
         public async Task<IReadOnlyList<RestaurantResponseDto>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("{Service}.{Method} called", nameof(GetAllRestaurantsQueryHandler), "GetAllRestaurants");
-            IReadOnlyList<Restaurant> restaurants = await _restaurantRepository.GetRestaurantsAsync(cancellationToken);
-            _logger.LogInformation("Fetched {count} from restaurants", restaurants.Count);
+            //IReadOnlyList<Restaurant> restaurants = await _restaurantRepository.GetRestaurantsAsync(cancellationToken);
+            IReadOnlyList<Restaurant> restaurants = await _restaurantRepository.GetMatchingRestaurantsAsync(request.searchPhrase, cancellationToken);
+            _logger.LogInformation("Fetched {Count} from restaurants", restaurants.Count);
             return _mapper.Map<IReadOnlyList<RestaurantResponseDto>>(restaurants);
         }
     }

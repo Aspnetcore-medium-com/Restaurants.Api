@@ -9,5 +9,6 @@ namespace Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants
 {
     public class GetAllRestaurantsQuery:IRequest<IReadOnlyList<RestaurantResponseDto>>
     {
+        public string? searchPhrase { get; set; } = string.Empty;
     }
 }

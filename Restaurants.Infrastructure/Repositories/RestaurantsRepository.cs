@@ -22,6 +22,17 @@ namespace Restaurants.Infrastructure.Repositories
             return restaurants;
         }
 
+        public async Task<IReadOnlyList<Restaurant>> GetMatchingRestaurantsAsync(string? searchPhrase,CancellationToken cancellationToken = default)
+        {
+            IQueryable<Restaurant> query =  _dbContext.Restaurants.Include(r => r.Dishes);
+            if ( !string.IsNullOrWhiteSpace(searchPhrase))
+            {
+                query = query.Where(r => r.Name.ToLower().Contains(searchPhrase) ||
+                          r.Description.ToLower().Contains(searchPhrase));
+            }
+            var restaurants = await query.ToListAsync(cancellationToken);
+            return restaurants;
+        }
         public async Task<Restaurant?> GetRestaurantByIdAsync(int id, CancellationToken cancellation = default)
         {
             Restaurant? restaurant = await _dbContext.Restaurants.Include(r => r.Dishes).FirstOrDefaultAsync(r => r.Id == id, cancellation);

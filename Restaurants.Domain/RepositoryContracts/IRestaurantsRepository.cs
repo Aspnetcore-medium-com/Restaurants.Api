@@ -49,5 +49,12 @@ namespace Restaurants.Domain.RepositoryContracts
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task UpdateRestaurantAsync(Restaurant restaurant, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// returns matching restaurants
+        /// </summary>
+        /// <param name="searchPhrase"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<IReadOnlyList<Restaurant>> GetMatchingRestaurantsAsync(string? searchPhrase, CancellationToken cancellationToken = default);
     }
 }

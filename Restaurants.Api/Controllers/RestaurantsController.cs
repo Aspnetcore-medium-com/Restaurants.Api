@@ -30,9 +30,9 @@ namespace Restaurants.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IReadOnlyList<RestaurantResponseDto>>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<ActionResult<IReadOnlyList<RestaurantResponseDto>>> GetAll([FromQuery]GetAllRestaurantsQuery getAllRestaurantsQuery, CancellationToken cancellationToken = default)
         {
-            IReadOnlyList<RestaurantResponseDto> restaurants = await _mediator.Send(new GetAllRestaurantsQuery(),cancellationToken);
+            IReadOnlyList<RestaurantResponseDto> restaurants = await _mediator.Send(getAllRestaurantsQuery, cancellationToken);
             return Ok(restaurants);
         }
 
