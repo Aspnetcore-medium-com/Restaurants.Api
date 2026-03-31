@@ -22,7 +22,7 @@ namespace Restaurants.Infrastructure.Repositories
             return restaurants;
         }
 
-        public async Task<IReadOnlyList<Restaurant>> GetMatchingRestaurantsAsync(string? searchPhrase,CancellationToken cancellationToken = default)
+        public async Task<(int,IReadOnlyList<Restaurant>)> GetMatchingRestaurantsAsync(string? searchPhrase,int pageSize,int pageNumber,CancellationToken cancellationToken = default)
         {
             IQueryable<Restaurant> query =  _dbContext.Restaurants.Include(r => r.Dishes);
             if ( !string.IsNullOrWhiteSpace(searchPhrase))
@@ -30,8 +30,10 @@ namespace Restaurants.Infrastructure.Repositories
                 query = query.Where(r => r.Name.ToLower().Contains(searchPhrase) ||
                           r.Description.ToLower().Contains(searchPhrase));
             }
-            var restaurants = await query.ToListAsync(cancellationToken);
-            return restaurants;
+            var totalCount = await query.CountAsync();
+            var restaurants = await query.Skip(pageSize * (pageNumber-1 )).Take(pageSize) 
+                .ToListAsync(cancellationToken);
+            return (totalCount,restaurants);
         }
         public async Task<Restaurant?> GetRestaurantByIdAsync(int id, CancellationToken cancellation = default)
         {

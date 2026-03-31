@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurants.Core.Common;
 using Restaurants.Core.Services;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.RepositoryContracts;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants
 {
-    public class GetAllRestaurantsQueryHandler : IRequestHandler<GetAllRestaurantsQuery, IReadOnlyList<RestaurantResponseDto>>
+    public class GetAllRestaurantsQueryHandler : IRequestHandler<GetAllRestaurantsQuery, PagedResult<RestaurantResponseDto>>
     {
         private readonly ILogger<GetAllRestaurantsQueryHandler> _logger;
         private readonly IRestaurantsRepository _restaurantRepository;
@@ -23,13 +24,15 @@ namespace Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants
             _restaurantRepository = restaurantRepository;
             _mapper = mapper;
         }
-        public async Task<IReadOnlyList<RestaurantResponseDto>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<RestaurantResponseDto>> Handle(GetAllRestaurantsQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("{Service}.{Method} called", nameof(GetAllRestaurantsQueryHandler), "GetAllRestaurants");
             //IReadOnlyList<Restaurant> restaurants = await _restaurantRepository.GetRestaurantsAsync(cancellationToken);
-            IReadOnlyList<Restaurant> restaurants = await _restaurantRepository.GetMatchingRestaurantsAsync(request.searchPhrase, cancellationToken);
+            var ( count,  restaurants) = await _restaurantRepository.GetMatchingRestaurantsAsync(request.searchPhrase,request.pageSize,request.pageNumber, cancellationToken);
             _logger.LogInformation("Fetched {Count} from restaurants", restaurants.Count);
-            return _mapper.Map<IReadOnlyList<RestaurantResponseDto>>(restaurants);
+            var result = _mapper.Map<IReadOnlyList<RestaurantResponseDto>>(restaurants);
+            var pagedResult = new PagedResult<RestaurantResponseDto>(result.ToList(),count,request.pageSize,request.pageNumber);
+            return pagedResult;
         }
     }
 }

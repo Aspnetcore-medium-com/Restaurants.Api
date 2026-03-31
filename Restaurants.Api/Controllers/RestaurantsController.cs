@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Api.Filters;
+using Restaurants.Core.Common;
 using Restaurants.Core.Dtos.Restaurants;
 using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create;
 using Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Delete;
@@ -32,7 +33,7 @@ namespace Restaurants.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IReadOnlyList<RestaurantResponseDto>>> GetAll([FromQuery]GetAllRestaurantsQuery getAllRestaurantsQuery, CancellationToken cancellationToken = default)
         {
-            IReadOnlyList<RestaurantResponseDto> restaurants = await _mediator.Send(getAllRestaurantsQuery, cancellationToken);
+            PagedResult<RestaurantResponseDto> restaurants = await _mediator.Send(getAllRestaurantsQuery, cancellationToken);
             return Ok(restaurants);
         }
 
