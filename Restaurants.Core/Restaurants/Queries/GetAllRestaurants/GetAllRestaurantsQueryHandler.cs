@@ -28,10 +28,10 @@ namespace Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants
         {
             _logger.LogInformation("{Service}.{Method} called", nameof(GetAllRestaurantsQueryHandler), "GetAllRestaurants");
             //IReadOnlyList<Restaurant> restaurants = await _restaurantRepository.GetRestaurantsAsync(cancellationToken);
-            var ( count,  restaurants) = await _restaurantRepository.GetMatchingRestaurantsAsync(request.searchPhrase,request.pageSize,request.pageNumber, cancellationToken);
+            var ( count,  restaurants) = await _restaurantRepository.GetMatchingRestaurantsAsync(request.SearchPhrase,request.PageSize,request.PageNumber,request.SortKey,request.SortDirection, cancellationToken);
             _logger.LogInformation("Fetched {Count} from restaurants", restaurants.Count);
             var result = _mapper.Map<IReadOnlyList<RestaurantResponseDto>>(restaurants);
-            var pagedResult = new PagedResult<RestaurantResponseDto>(result.ToList(),count,request.pageSize,request.pageNumber);
+            var pagedResult = new PagedResult<RestaurantResponseDto>(result.ToList(),count,request.PageSize,request.PageNumber);
             return pagedResult;
         }
     }

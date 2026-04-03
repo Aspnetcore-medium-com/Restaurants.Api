@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.RepositoryContracts;
 using Restaurants.Infrastructure.Persistance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,13 +24,24 @@ namespace Restaurants.Infrastructure.Repositories
             return restaurants;
         }
 
-        public async Task<(int,IReadOnlyList<Restaurant>)> GetMatchingRestaurantsAsync(string? searchPhrase,int pageSize,int pageNumber,CancellationToken cancellationToken = default)
+        public async Task<(int,IReadOnlyList<Restaurant>)> GetMatchingRestaurantsAsync(string? searchPhrase,int pageSize,int pageNumber,string? searchKey, SortDirection sortDirection, CancellationToken cancellationToken = default)
         {
             IQueryable<Restaurant> query =  _dbContext.Restaurants.Include(r => r.Dishes);
             if ( !string.IsNullOrWhiteSpace(searchPhrase))
             {
                 query = query.Where(r => r.Name.ToLower().Contains(searchPhrase) ||
                           r.Description.ToLower().Contains(searchPhrase));
+            }
+            if (searchKey != null)
+            {
+                var columnSelector = new Dictionary<string, Expression<Func<Restaurant, object>>>()
+                {
+                    {nameof(Restaurant.Name),r => r.Name },
+                    { nameof(Restaurant.Description), r => r.Description},
+                    {nameof(Restaurant.Category), r => r.Category }
+                };
+                var selectedColExpression = columnSelector[searchKey];
+                query = sortDirection == SortDirection.Ascending ? query.OrderBy(selectedColExpression) : query.OrderByDescending(selectedColExpression);
             }
             var totalCount = await query.CountAsync();
             var restaurants = await query.Skip(pageSize * (pageNumber-1 )).Take(pageSize) 

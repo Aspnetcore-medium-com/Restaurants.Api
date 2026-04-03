@@ -12,6 +12,7 @@ using Restaurants.Core.Dtos.Restaurants.Queries;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Core.Dtos.Restaurants.Queries.GetRestaurantsById;
 using Restaurants.Core.ServiceContracts;
+using Restaurants.Core.Validators;
 using Restaurants.Domain.Constants;
 using Restaurants.Infrastructure.Authorization;
 
@@ -31,6 +32,7 @@ namespace Restaurants.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [TypeFilter(typeof(ValidationFilter<GetAllRestaurantsQuery>))]
         public async Task<ActionResult<IReadOnlyList<RestaurantResponseDto>>> GetAll([FromQuery]GetAllRestaurantsQuery getAllRestaurantsQuery, CancellationToken cancellationToken = default)
         {
             PagedResult<RestaurantResponseDto> restaurants = await _mediator.Send(getAllRestaurantsQuery, cancellationToken);

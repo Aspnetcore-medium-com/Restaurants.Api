@@ -1,4 +1,5 @@
-﻿using Restaurants.Domain.Entities;
+﻿using Restaurants.Domain.Constants;
+using Restaurants.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,6 @@ namespace Restaurants.Domain.RepositoryContracts
         /// <param name="searchPhrase"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<(int, IReadOnlyList<Restaurant>)> GetMatchingRestaurantsAsync(string? searchPhrase, int pageSize, int pageNumber, CancellationToken cancellationToken = default);
+        Task<(int, IReadOnlyList<Restaurant>)> GetMatchingRestaurantsAsync(string? searchPhrase, int pageSize, int pageNumber,string? sortKey,SortDirection sortDirection, CancellationToken cancellationToken = default);
     }
 }
