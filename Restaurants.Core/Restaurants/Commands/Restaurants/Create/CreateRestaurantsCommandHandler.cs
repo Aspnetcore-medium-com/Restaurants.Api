@@ -35,8 +35,8 @@ namespace Restaurants.Core.Dtos.Restaurants.Commands.Restaurants.Create
         {
             var user = _userContext.GetCurrentUser();
             _logger.LogInformation("create restaurant called {@Request}",request);
-            var restaurant = _mapper.Map<Restaurant>(request);
             if ( user == null) { throw new NotFoundException($"user not found ",nameof(user)); }
+            var restaurant = _mapper.Map<Restaurant>(request);
             restaurant.OwnerId = Guid.Parse(user.Id);
             if ( ! _restaurantAuthorizationService.Authorize(restaurant,ResourceOperation.Create)) {
                 _logger.LogInformation("Create operation denied for {User}", user.Email);
