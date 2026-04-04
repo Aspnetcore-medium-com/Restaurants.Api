@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Restaurants.Infrastructure.Persistance
 {
-    public class ApplicationDBContext : IdentityDbContext<ApplicationUser,ApplicationRole,Guid>
+    public class ApplicationDBContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        
+
         public virtual DbSet<Restaurant> Restaurants { get; set; }
         public virtual DbSet<Dish> Dishes { get; set; }
 
@@ -24,21 +24,25 @@ namespace Restaurants.Infrastructure.Persistance
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Restaurant>().OwnsOne(r => r.Address);
 
             modelBuilder.Entity<Restaurant>()
                 .HasMany(r => r.Dishes)
                 .WithOne(d => d.Restaurant)
                 .HasForeignKey(d => d.RestaurantId);
-
-            modelBuilder.Entity<Dish>()
-                .Property(d => d.Price)
-                .HasPrecision(18,2);
+            if (Database.IsRelational())
+            {
+                modelBuilder.Entity<Dish>()
+                    .Property(d => d.Price)
+                    .HasPrecision(18, 2);
+            }
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(a => a.OwnedRestaurants)
                 .WithOne(r => r.Owner)
                 .HasForeignKey(r => r.OwnerId);
+
         }
 
 

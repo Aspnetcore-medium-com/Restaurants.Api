@@ -24,7 +24,14 @@ namespace Restaurants.Infrastructure.Extensions
     {
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(configuration.GetConnectionString("RestaurantsDB")).EnableSensitiveDataLogging());
+            var connectionString = configuration.GetConnectionString("RestaurantsDB");
+
+            if (!string.IsNullOrEmpty(connectionString))
+            {
+                services.AddDbContext<ApplicationDBContext>(options =>
+                    options.UseSqlServer(connectionString).EnableSensitiveDataLogging());
+            }
+            //services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(configuration.GetConnectionString("RestaurantsDB")).EnableSensitiveDataLogging());
             services.AddScoped<IRestaurantsRepository,RestaurantsRepository>();
             services.AddScoped<IDishesRepositroy,DishesRepository>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>,

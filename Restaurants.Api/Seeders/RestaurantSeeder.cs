@@ -17,12 +17,22 @@ namespace Restaurants.Api.Seeders
 
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-            var dbName = context.Database.GetDbConnection().Database;
-            if (string.IsNullOrWhiteSpace(dbName) || dbName == "master")
+            // Guard the relational-only call
+            if (context.Database.IsRelational())
             {
-                throw new Exception($"Invalid database detected: {dbName}");
+                var dbName = context.Database.GetDbConnection().Database;
+                if (string.IsNullOrWhiteSpace(dbName) || dbName == "master")
+                {
+                    return;
+                }
+
+                await context.Database.MigrateAsync();
+                if (string.IsNullOrWhiteSpace(dbName) || dbName == "master")
+                {
+                    throw new Exception($"Invalid database detected: {dbName}");
+                }
             }
-            await context.Database.MigrateAsync();
+            
 
             if (!await context.Restaurants.AnyAsync())
             {
