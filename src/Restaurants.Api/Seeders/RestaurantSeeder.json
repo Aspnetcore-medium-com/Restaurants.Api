@@ -6,6 +6,7 @@
     "hasDelivery": true,
     "contactEmail": "contact@kfc.com",
     "contactNumber": "+44 20 1234 5678",
+    "OwnerId": "007aeda4-5b23-4deb-ebfc-08de89735c1a",
     "address": {
       "city": "London",
       "street": "Cork St 5",
@@ -30,6 +31,7 @@
     "category": "Fast Food",
     "hasDelivery": true,
     "contactEmail": "contact@mcdonald.com",
+    "OwnerId": "007aeda4-5b23-4deb-ebfc-08de89735c1a",
     "contactNumber": "+44 20 9876 5432",
     "address": {
       "city": "London",

@@ -7,30 +7,40 @@ using Restaurants.Core.Extension;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Extensions;
 using Serilog;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.AddPresentation();
-builder.Services.AddInfra(builder.Configuration).AddCore();
-
-var app = builder.Build();
-
-app.UseErrorHandlingMiddleware();
-await app.Seed();
-
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-// Configure the HTTP request pipeline.
-app.MapGroup("api/identity").MapIdentityApi<ApplicationUser>().AllowAnonymous();
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseHttpLogging();
-app.UseSerilogRequestLogging();
-app.MapControllers().RequireAuthorization(); 
+    var builder = WebApplication.CreateBuilder(args);
 
-app.Run();
+    // Add services to the container.
+    builder.AddPresentation();
+    builder.Services.AddInfra(builder.Configuration).AddCore();
+
+    var app = builder.Build();
+
+    app.UseErrorHandlingMiddleware();
+    await app.Seed();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+    // Configure the HTTP request pipeline.
+    app.MapGroup("api/identity").MapIdentityApi<ApplicationUser>().AllowAnonymous();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.UseHttpLogging();
+    app.UseSerilogRequestLogging();
+    app.MapControllers().RequireAuthorization();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application start up failed");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
 public partial class Program { }
